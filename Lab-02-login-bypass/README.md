@@ -1,7 +1,7 @@
 # Lab 02 – SQL Injection Vulnerability Allowing Login Bypass
 
 ## Lab Information
-  
+
 - **Platform:** PortSwigger Web Security Academy
 - **Category:** SQL Injection
 - **Difficulty:** Apprentice
@@ -38,7 +38,7 @@ Normally, the application executes a query similar to:
 ```sql
 SELECT * FROM users
 WHERE username = 'administrator'
-AND password = 'password';
+AND password = 'your_password';
 ```
 
 After injecting:
@@ -52,16 +52,16 @@ the query becomes:
 ```sql
 SELECT * FROM users
 WHERE username = 'administrator' --'
-AND password = 'anything';
+AND password = 'your_password';
 ```
 
 The `--` starts a SQL comment, so everything after it is ignored.
 
 As a result:
 
-- The password check is removed.
-- The application only checks whether the username is **administrator**.
-- Login succeeds without knowing the password.
+- The password check is ignored.
+- The application only verifies the username.
+- Authentication succeeds if the username exists.
 
 ---
 
@@ -69,31 +69,31 @@ As a result:
 
 ### 1. Open the Lab
 
-Access the login page.
+Read the lab description and understand the objective.
 
-![Lab Details](images/step1-lab-details.png)
+![Lab Details](images-02/1.%20lab%20details.png)
 
 ---
 
-### 2. Visit the Login Form
+### 2. Visit the Login Page
 
-Navigate to **My Account** to reach the login page.
+Navigate to **My Account** to access the login form.
 
-![Login Page](images/step2-login-page.png)
+![Homepage](images-02/2.%20homepage.png)
 
 ---
 
 ### 3. Inject the Payload
 
-Enter the following into the **Username** field:
+Enter the following payload into the **Username** field:
 
 ```sql
 administrator' --
 ```
 
-Enter any value in the password field and click **Log in**.
+Enter **any value** (for example, `hello`) in the password field and click **Log in**.
 
-![Payload](images/step3-login-bypass.png)
+![Bypassing Login](images-02/3.%20bypassing.png)
 
 ---
 
@@ -101,16 +101,17 @@ Enter any value in the password field and click **Log in**.
 
 The application logs in as the **administrator**, confirming that the SQL Injection attack successfully bypassed authentication.
 
-![Lab Solved](images/step4-lab-solved.png)
+![Lab Solved](images-02/4.%20result.png)
 
 ---
 
-# Key Learning Points
+## Key Learning Points
 
 - SQL Injection can affect login forms.
 - Authentication can be bypassed when user input is not sanitized.
-- `--` is used to comment out the remaining SQL query.
-- Input validation and parameterized queries help prevent SQL Injection.
+- The `--` operator comments out the rest of the SQL query.
+- Parameterized queries help prevent SQL Injection attacks.
+- User input should never be directly concatenated into SQL statements.
 
 ---
 
@@ -121,7 +122,16 @@ Developers should:
 - Use parameterized (prepared) SQL statements.
 - Validate and sanitize user input.
 - Never concatenate user input directly into SQL queries.
-- Apply least-privilege access to database accounts.
+- Apply the principle of least privilege to database accounts.
+
+---
+
+## What I Learned
+
+- How SQL Injection can bypass authentication.
+- How SQL comments (`--`) change the execution of a query.
+- Why using prepared statements is important for preventing SQL Injection.
+- How a small input validation mistake can lead to a serious security vulnerability.
 
 ---
 
