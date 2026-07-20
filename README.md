@@ -17,7 +17,7 @@ Hands-on SQL Injection labs completed on **PortSwigger Web Security Academy**.
 | Lab | Topic | Status |
 |------|--------|--------|
 | Lab 01 | WHERE Clause - Hidden Data | ✅ |
-| Lab 02 | Login Bypass | ⏳ |
+| Lab 02 | Login Bypass | ✅ |
 | Lab 03 | UNION Attack | ⏳ |
 | Lab 04 | Blind SQLi | ⏳ |
 
